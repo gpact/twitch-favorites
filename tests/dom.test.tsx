@@ -1,8 +1,8 @@
-// const x = '<html><body><div>ABC</div></body></html>'
-import { getElementByXpath } from '../source/utils/dom'
+import { expect, describe, beforeAll, afterAll, test } from "@jest/globals";
+import { getElementByXpath } from "../source/utils/dom";
 
-describe('getElementByXpath', () => {
-  let container: HTMLElement
+describe("getElementByXpath", () => {
+  let container: HTMLElement;
 
   beforeAll(() => {
     let block = `
@@ -15,33 +15,32 @@ describe('getElementByXpath', () => {
         </span>
       </button>
     </div>
-    `
-    container = document.createElement("div")
-    container.innerHTML = block
-    document.body.appendChild(container)
-  })
+    `;
+    container = document.createElement("div");
+    container.innerHTML = block;
+    document.body.appendChild(container);
+  });
 
   afterAll(() => {
-    container.parentElement?.removeChild(container)
-    console.log(document.body.outerHTML)
-  })
+    container.parentElement?.removeChild(container);
+  });
 
-  it('should return an existing element for a valid xpath', () => {
-    expect(getElementByXpath('//span')).not.toBeNull()
-    expect(getElementByXpath('//button')).not.toBeNull()
-  })
+  test("should return an existing element for a valid xpath", () => {
+    expect(getElementByXpath("//span")).not.toBeNull();
+    expect(getElementByXpath("//button")).not.toBeNull();
+  });
 
-  it('should only return the first element in the DOM', () => {
-    expect(getElementByXpath('//span')?.id).toBe('firstSpan')
-    expect(getElementByXpath('//span[span]')?.id).toBe('thirdSpan')
-  })
-  
-  it('should return null if there is no elements for the given path', () => {
-    expect(getElementByXpath('//h1')).toBeNull()
-    expect(getElementByXpath('//p')).toBeNull()
-  })
+  test("should only return the first element in the DOM", () => {
+    expect(getElementByXpath("//span")?.id).toBe("firstSpan");
+    expect(getElementByXpath("//span[span]")?.id).toBe("thirdSpan");
+  });
 
-  it('should return null if no XPATH is provided', () => {
-    expect(getElementByXpath('')).toBeNull()
-  })
-})
+  test("should return null if there is no elements for the given path", () => {
+    expect(getElementByXpath("//h1")).toBeNull();
+    expect(getElementByXpath("//p")).toBeNull();
+  });
+
+  test("should return null if no XPATH is provided", () => {
+    expect(getElementByXpath("")).toBeNull();
+  });
+});
